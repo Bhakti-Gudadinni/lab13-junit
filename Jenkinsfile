@@ -1,24 +1,24 @@
 pipeline {
     agent any
+
     tools {
         jdk 'JDK17'
         maven 'Maven3'
     }
+
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Bhakti-Gudadinni/lab13-junit.git'
-            }
-        }
+        // REMOVED the 'Checkout' stage because Jenkins does this automatically
+        
         stage('Build & Test') {
             steps {
-                sh 'mvn clean test'
+                // Use 'bat' for Windows-based Jenkins (based on your logs)
+                bat 'mvn clean test'
             }
-        }
-    }
-    post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
         }
     }
 }
